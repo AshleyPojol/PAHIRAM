@@ -1,65 +1,63 @@
-import React, { useState } from "react";
+// BorrowItems.jsx
+
 import MainDisplayLayout from "../../../Components/Layout/MainDisplay/MainDisplayLayout";
 import BorrowForm from "./BorrowForm";
+import React, { useState } from "react";
 import BorrowConfirm from "./BorrowConfirm";
+import BorrowStepper from "./BorrowStepper";
 import BorrowSuccess from "./BorrowSuccess";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
-import StepLabel from "@mui/material/StepLabel";
-import InnerContainer from "./InnerContainer";
-import { FormDataProvider } from "./FormDataContext";
-
-
-const steps = ["Fill-up Borrowing Form",  "Confirmation of Details"];
 
 function BorrowItems() {
   const [activeStep, setActiveStep] = useState(0);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(null);
+  const [successStep, setSuccessStep] = useState(false);
 
-  const handleNext = (data) => {
-    setFormData(data);
-    setActiveStep((prevActiveStep) =>
-      prevActiveStep < steps.length - 1 ? prevActiveStep + 1 : prevActiveStep
-    );
+  // Next
+  const handleNext = () => {
+    setActiveStep((prevStep) => prevStep + 1);
   };
-
+  
+  // Back
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (successStep) {
+      // If in success step, go back to form
+      setSuccessStep(false);
+      setActiveStep(0);
+    } else {
+      // Otherwise, go back one step
+      setActiveStep((prevStep) => prevStep - 1);
+    }
   };
 
+  // Submit
+  const handleFormSubmit = (data) => {
+    setFormData(data);
+    handleNext();
+  };
+  
+  // Confirm
   const handleConfirm = () => {
-    // Handle confirmation logic if needed
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setSuccessStep(true);
+    handleNext();
   };
-  const handleBackToForm = () => {
-    setActiveStep(0); // Go back to the first step
-  };
-
 
   return (
-    <FormDataProvider>
-      <MainDisplayLayout>
-        <InnerContainer>
-          <div className="stepper-container" style={{ width: "70vh" }}>
-            <Stepper activeStep={activeStep} className="custom-stepper">
-              {steps.map((label, index) => (
-                <Step key={label}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              ))}
-            </Stepper>
-          </div>
-        </InnerContainer>
-
-        <div className="form-confirm" style={{ paddingTop: "25px" }}>
-          {activeStep === 0 && <BorrowForm onNext={handleNext} />}
-          {activeStep === 1 && (
-            <BorrowConfirm formData={formData} onBack={handleBack} onConfirm={handleConfirm} />
-          )}
-          {activeStep === 2 && <BorrowSuccess onBack={handleBackToForm} />}
-        </div>
-      </MainDisplayLayout>
-    </FormDataProvider>
+    <MainDisplayLayout>
+      <BorrowStepper activeStep={activeStep} />
+      {activeStep === 0 && !successStep && (
+        <BorrowForm onSubmitProp={handleFormSubmit} />
+      )}
+      {activeStep === 1 && !successStep && (
+        <BorrowConfirm
+          data={formData}
+          onBack={handleBack}
+          onConfirm={handleConfirm}
+        />
+      )}
+      {successStep && (
+        <BorrowSuccess onBack={handleBack} />
+      )}
+    </MainDisplayLayout>
   );
 }
 

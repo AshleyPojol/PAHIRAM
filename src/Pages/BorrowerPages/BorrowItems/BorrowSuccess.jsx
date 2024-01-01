@@ -13,7 +13,7 @@ const BorrowSuccess = ({ onBack }) => {
         </p>
         <p>Want another transaction?</p>
       </div>
-      <Button variant="contained" color="primary" onClick={onBack}>
+      <Button variant="outlined" color="primary" onClick={onBack}>
         Back
       </Button>
     </InnerContainer>

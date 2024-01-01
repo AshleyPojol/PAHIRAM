@@ -1,12 +1,13 @@
 import React from "react";
-import Paper from "@mui/material/Paper";
+import { Box } from "@mui/material";
 
 const InnerContainer = ({ children }) => (
-  <Paper
+  <Box sx={{ bgcolor: "neutral.background"}}
     elevation={3}
     style={{
-      padding: "20px",
-      width: "750px",
+      paddingTop: "24px",
+      paddingBottom: "24px",
+      width: "auto",
       margin: "auto",
       display: "flex",
       flexDirection: "column",
@@ -15,7 +16,7 @@ const InnerContainer = ({ children }) => (
     }}
   >
     {children}
-  </Paper>
+  </Box>
 );
 
 export default InnerContainer;
