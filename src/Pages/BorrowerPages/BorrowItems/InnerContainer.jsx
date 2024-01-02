@@ -5,8 +5,8 @@ const InnerContainer = ({ children }) => (
   <Box sx={{ bgcolor: "neutral.background"}}
     elevation={3}
     style={{
-      paddingTop: "24px",
-      paddingBottom: "24px",
+      paddingTop: "2%",
+      paddingBottom: "2%",
       width: "auto",
       margin: "auto",
       display: "flex",
