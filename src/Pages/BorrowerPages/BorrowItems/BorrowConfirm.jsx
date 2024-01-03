@@ -42,27 +42,27 @@ function BorrowConfirm({ onBack, onConfirm, data }) {
               </div>
             </Grid>
             <Grid item xs={12}>
-              <div className="endorsed" style={{paddingLeft: "25.7%"}}>
+              <div className="endorsed" style={{ paddingLeft: "25.7%" }}>
                 <strong> Endorsed By: </strong> {data.endorser}
               </div>
             </Grid>
             <Grid item xs={12}>
-              <div className="office" style={{paddingLeft: "25.7%"}}>
+              <div className="office" style={{ paddingLeft: "25.7%" }}>
                 <strong> Office: </strong> {data.offices}{" "}
               </div>
             </Grid>
             <Grid item xs={12}>
-              <div className="purpose" style={{paddingLeft: "25.7%"}}>
+              <div className="purpose" style={{ paddingLeft: "25.7%" }}>
                 <strong> Purpose: </strong> {data.purposes}
               </div>
             </Grid>
             <Grid item xs={12}>
-              <div className="start-date-bt" style={{paddingLeft: "25.7%"}}>
-                <strong>Start Date: </strong>
+              <div className="start-date-bt" style={{ paddingLeft: "25.7%" }}>
+                <strong>Start Date: </strong> 
               </div>
             </Grid>
             <Grid item xs={12}>
-              <div className="return-date-bt" style={{paddingLeft: "25.7%"}}>
+              <div className="return-date-bt" style={{ paddingLeft: "25.7%" }}>
                 <strong>Return Date: </strong>
               </div>
             </Grid>
@@ -87,19 +87,43 @@ function BorrowConfirm({ onBack, onConfirm, data }) {
               </div>
             </Grid>
             <Grid item xs={6}>
-              <div className="item-label" style={{ textAlign: "center" }}>
-                {/* Borrowed Items here */} Borrowed Items Here
+              <div
+                className="item-label"
+                style={{ textAlign: "center", paddingLeft: "13%" }}
+              >
+                {/* Borrowed Items here */} <strong> Borrowed Items </strong>
               </div>
             </Grid>
             <Grid item xs={6}>
-              <div className="quantity-label" style={{ textAlign: "center" }}>
-                {/* Quantity of Borrowed Items here */} Quantity Here
+              <div
+                className="quantity-label"
+                style={{ textAlign: "center", paddingRight: "13%" }}
+              >
+                {/* Quantity of Borrowed Items here */}{" "}
+                <strong> Quantity </strong>
+              </div>
+            </Grid>
+            <Grid item xs={6}>
+              <div
+                className="items"
+                style={{ textAlign: "center", paddingLeft: "13%" }}
+              >
+                {data.items}
+              </div>
+            </Grid>
+
+            <Grid item xs={6}>
+              <div
+                className="quantity"
+                style={{ textAlign: "center", paddingRight: "14%" }}
+              >
+                {data.quantity}
               </div>
             </Grid>
           </Grid>
         </div>
       </div>
-      <div className="button" style={{ paddingTop: "3%"  , textAlign:"center"}}>
+      <div className="button" style={{ paddingTop: "3%", textAlign: "center" }}>
         <Grid container spacing={2}>
           <Grid item xs={6}>
             <div className="back">

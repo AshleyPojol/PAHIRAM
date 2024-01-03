@@ -43,7 +43,10 @@ function BorrowItems() {
 
   return (
     <MainDisplayLayout>
-      <BorrowStepper activeStep={activeStep} />
+      <div className="stepper" style={{ paddingBottom: "1%"}}>
+        <BorrowStepper activeStep={activeStep} />
+      </div>
+      
       {activeStep === 0 && !successStep && (
         <BorrowForm onSubmitProp={handleFormSubmit} />
       )}

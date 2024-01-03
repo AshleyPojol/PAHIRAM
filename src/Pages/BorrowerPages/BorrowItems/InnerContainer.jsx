@@ -2,7 +2,7 @@ import React from "react";
 import { Box } from "@mui/material";
 
 const InnerContainer = ({ children }) => (
-  <Box sx={{ bgcolor: "neutral.background"}}
+  <Box sx={{ bgcolor: "neutral.background", borderRadius: "16px"}}
     elevation={3}
     style={{
       paddingTop: "2%",
