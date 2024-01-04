@@ -7,16 +7,26 @@ import {
   Box,
   TextField,
   Button,
+  CardActionArea,
 } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogContent from "@mui/material/DialogContent";
+
 import InnerContainer from "./InnerContainer";
+
 
 const complete = [
   {
-    barcode: "20230102-GCYR-APM",
+    barcode: "20200102-GCYR-APM",
     endorsedBy: "Nathaniel Christian Mendoza",
     office: "Engineering and Science Laboratory Office",
-    purpose: "Academic Purpose Midterms & Finals"
-  }
+    purpose: "Academic Purpose Midterms & Finals",
+    startdate: "January 01, 2020",
+    enddate: "January 03, 2020",
+    itemname: "Pyrex Graduated Cylinder",
+    quantity: "1",
+    remarks: "The item has been successfully returned."
+  },
 ];
 
 const active = [
@@ -25,33 +35,57 @@ const active = [
     endorsedBy: "Roselle Wednesday Gardon",
     office: "Information Technology Resource Office",
     purpose: "Academic Purposes Midterms & Finals",
+    startdate: "January 01, 2023",
+    enddate: "January 02, 2023",
+    itemname: "Nikon D300 - Camera",
+    quantity: "1",
+
   },
   {
-    barcode: "20230102-TABAL-OP",
+    barcode: "20230202-TABAL-OP",
     endorsedBy: "Patrick Lita",
     office: "Building Management Office",
     purpose: "Organization Purposes",
+    startdate: "February 02, 2023",
+    enddate: "February 02, 2023",
+    itemname: "Volleyball Net and Ball",
+    quantity: "1",
   },
   {
     barcode: "20230102-BKPYR-APQ",
     endorsedBy: "Kimberly Cruz",
     office: "Engineering and Science Laboratory Office",
     purpose: "Academic Purposes Assignment - Quizzes",
+    startdate: "January 01, 2023",
+    enddate: "January 02, 2023",
+    itemname: "Pyrex Beaker",
+    quantity: "3",
   },
 ];
 
+// can't call will fix later
 const remarks = [
   {
-    completed: "The item has been returned successfully."
+    completed: "The item has been returned successfully.",
   },
   {
-    incompleted: "The item has not been returned, but a penalty was paid."
+    incompleted: "The item has not been returned, but a penalty was paid.",
   },
 ];
 
 function BorrowTable() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
+  const handleOpenModal = (item) => {
+    setSelectedItem(item);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
   const filteredActiveData = active.filter((item) =>
     item.barcode.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -59,8 +93,6 @@ function BorrowTable() {
   const filteredCompleteData = complete.filter((item) =>
     item.barcode.toLowerCase().includes(searchQuery.toLowerCase())
   );
-
-  
 
   return (
     <InnerContainer>
@@ -96,7 +128,7 @@ function BorrowTable() {
             {filteredActiveData.map((item) => (
               <Grid item xs={4} key={item.barcode}>
                 <Box sx={{ height: "auto" }}>
-                  <div className="card-active" style={{ paddingLeft: "10%" }}>
+                  <div className="card-active" style={{ }}>
                     <Card
                       sx={{
                         height: "100%",
@@ -106,6 +138,7 @@ function BorrowTable() {
                         },
                       }}
                     >
+                      <CardActionArea style={{ lineHeight: "1.5em", whiteSpace: "pre-line"}} onClick={() => handleOpenModal(item)}>
                       <CardContent
                         style={{ fontSize: "12px", whiteSpace: "pre-line " }}
                       >
@@ -121,6 +154,7 @@ function BorrowTable() {
                         <br />
                         <strong> Purpose:</strong> {item.purpose}
                       </CardContent>
+                      </CardActionArea>
                     </Card>
                   </div>
                 </Box>
@@ -135,7 +169,7 @@ function BorrowTable() {
             style={{
               fontSize: "24px",
               paddingLeft: "2%",
-              paddingTop: "1%"
+              paddingTop: "1%",
             }}
           >
             Completed Transaction
@@ -146,7 +180,7 @@ function BorrowTable() {
                 <Box sx={{ height: "auto" }}>
                   <div
                     className="first-card-completed"
-                    style={{ paddingLeft: "10%" }}
+                    style={{  }}
                   >
                     <Card
                       sx={{
@@ -157,17 +191,23 @@ function BorrowTable() {
                         },
                       }}
                     >
-                      <CardContent style={{ fontSize: "12px" }}><Typography
+                      <CardActionArea 
+                      style={{ lineHeight: "1.5em", whiteSpace: "pre-line" }}
+                      onClick={() => handleOpenModal(item)}>
+                      <CardContent style={{ fontSize: "12px" }}>
+                        <Typography
                           variant="h3"
                           style={{ paddingBottom: "1%" }}
                         >
                           {item.barcode}
                         </Typography>
-                        <strong> Endorsed By:</strong> {item.endorsedBy || ""} <br />
+                        <strong> Endorsed By:</strong> {item.endorsedBy || ""}{" "}
+                        <br />
                         <strong> Office:</strong> {item.office || ""} <br />
                         <strong> Purpose:</strong> {item.purpose || ""} <br />
-                        <strong> Remarks:</strong> The item has been returned successfully.
+                        <strong> Remarks:</strong> {item.remarks || ""} <br />
                       </CardContent>
+                      </CardActionArea>
                     </Card>
                   </div>
                 </Box>
@@ -176,6 +216,31 @@ function BorrowTable() {
           </Grid>
         </div>
       </div>
+      <Dialog open={modalOpen} onClose={handleCloseModal}>
+        <DialogContent>
+          {selectedItem && (
+            <>
+              <Typography variant="h3">{selectedItem.barcode}</Typography>
+              <strong> Endorsed By:</strong> {selectedItem.endorsedBy}
+              <br />
+              <strong> Office:</strong> {selectedItem.office}
+              <br />
+              <strong> Purpose:</strong> {selectedItem.purpose}
+              <br />
+              <strong> Start Date:</strong> {selectedItem.startdate}
+              <br />
+              <strong> End Date:</strong> {selectedItem.enddate}
+              <br />
+              <strong> Item Name:</strong> {selectedItem.itemname}
+              <br />
+              <strong> Quantity:</strong> {selectedItem.quantity}
+              <br />
+              <strong> Remarks:</strong>{" "}
+              {selectedItem.remarks || "No remarks"}
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </InnerContainer>
   );
 }
