@@ -1,12 +1,13 @@
 import axios from "axios";
 
-const instance = axios.create({
-  baseURL: process.env.REACT_APP_PAHIRAM_BACKEND,
+const ApcisAxiosConfig = axios.create({
+  // baseURL: process.env.REACT_APP_APCIS,
+  baseURL: "http://167.172.74.157/api",
   timeout: 5000,
   headers: {
-    "Accept": "application/json",
+    Accept: "application/json",
     "Content-Type": "application/json",
   },
 });
 
-export default instance;
+export default ApcisAxiosConfig;
